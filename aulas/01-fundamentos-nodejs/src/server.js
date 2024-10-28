@@ -1,10 +1,18 @@
 import http from 'node:http';
 import { json } from './middlewares/json.js' //Middlewares é um interceptador (uma função que intercepta a requisição)
-import { Database } from './middlewares/database.js';
+import { routes } from './routes.js'
 
-const users = []
+// Query Parameters: URL Stateful  => Filtros, paginação, não-obrigatorio
+// Route Parameters: Identificação de recurso
+// Request Body: Envio de informaçoues de um formulario (HTTPs)
 
-const database = new Database()
+// http://localhost:3333/users?userId=1&name=Daniel
+
+// GET http://localhost:3333/users/1
+// DELETE http://localhost:3333/users/1
+
+// POST http://localhost:3333/users
+
 
 const server = http.createServer(async (req, res) => {
 
@@ -12,26 +20,12 @@ const server = http.createServer(async (req, res) => {
 
     await json(req, res)
 
-    if (method === 'GET' && url === '/users') {
-        const users = database.select('users')
-
-        return res.end(JSON.stringify(users))
-    }
-
-    if (method === 'POST' && url === '/users') {
-        const { name, email } = req.body
-
-        const user = {
-            id: 1,
-            name,
-            email
-        }
-
-        database.insert('users', user)
-
-        return res.writeHead(201).end()
-    }
-
+    const route = routes.find(route => {
+        return route.method === method && route.path === url
+    })
+    
+   if (route) return route.handler(req, res)
+    
     return res.writeHead(404).end()
 
 })
