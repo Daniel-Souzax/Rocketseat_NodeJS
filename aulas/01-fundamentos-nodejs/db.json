@@ -1,9 +1,1 @@
-{
-    "users": [
-        {
-            "id": "6e15bd11-64da-4081-b727-4d92f948bdce",
-            "name": "Daniel de Souza",
-            "email": "danieldsfilho.dev@gmail.com"
-        }
-    ]
-}
+{"users":[{"id":"6e15bd11-64da-4081-b727-4d92f948bdce","name":"Daniel de Souza","email":"danieldsfilho.dev@gmail.com"},{"id":"f6195064-d4c7-4831-a547-c72cc0a5f0d9","name":"Daniel de Souza","email":"danieldsfilho.dev@gmail.com"}]}
